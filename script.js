@@ -3,9 +3,10 @@ let coins = 0;
 let autoClickerEnabled = false;
 let autoClickerPowerLevel = 1;
 let autoClickerSpeedLevel = 1;
-let autoClickerBasePrice = 10;
-let autoClickerPowerBasePrice = 100;
-let autoClickerSpeedBasePrice = 10000;
+let autoClickerBasePrice = 1000;
+let autoClickerPowerBasePrice = 50;
+let autoClickerSpeedBasePrice = 2000;
+let autoClickerBaseSpeed = 5000;
 
 // ----- Selektory -----
 const coinsSpan = document.querySelector("#coins");
@@ -13,6 +14,8 @@ const autoEnabledSpan = document.querySelector("#autoclicker-enabled");
 const autoPowerPriceSpan = document.querySelector("#autoclicker-powerPrice");
 const autoSpeedPriceSpan = document.querySelector("#autoclicker-speedPrice");
 const autoClickerPriceSpan = document.querySelector("#autoClicker-price");
+const autoPowerLevelSpan = document.querySelector("#autoclicker-powerLevel");
+const autoSpeedLevelSpan = document.querySelector("#autoclicker-speedLevel");
 
 const clickButton = document.querySelector("#click-button");
 const buyAutoButton = document.querySelector("#buyAutoClick-activate");
@@ -33,9 +36,9 @@ function loadGame() {
   if (saved) {
     const data = JSON.parse(saved);
     coins = data.coins ?? 0;
-    autoClickerEnabled = data.autoclickerEnabled ?? false;
+    autoClickerEnabled = data.autoClickerEnabled ?? false;
     autoClickerPowerLevel = data.autoClickerPowerLevel ?? 1;
-    autoClickerSpeedLevel = data.autoClickerSpeedLevel ?? 1000;
+    autoClickerSpeedLevel = data.autoClickerSpeedLevel ?? 1;
 
   }
   updateUI();
@@ -61,7 +64,7 @@ function getAutoClickerPowerPrice() {
   return Math.floor(autoClickerPowerBasePrice * Math.pow(1.5, autoClickerPowerLevel));
 }
 function getAutoClickerSpeedPrice() {
-    return Math.floor(autoClickerSpeedBasePrice * Math.pow(2, autoClickerSpeedLevel));
+    return Math.floor(autoClickerSpeedBasePrice * Math.pow(1.05, autoClickerSpeedLevel));
 }
 
 
@@ -77,7 +80,10 @@ function updateUI() {
   coinsSpan.textContent = coins;
   autoEnabledSpan.textContent = autoClickerEnabled;
   autoPowerPriceSpan.textContent = getAutoClickerPowerPrice();
+  autoPowerLevelSpan.textContent = autoClickerPowerLevel;
   autoSpeedPriceSpan.textContent = getAutoClickerSpeedPrice();
+  autoSpeedLevelSpan.textContent = autoClickerSpeedLevel;
+  autoClickerPriceSpan.textContent = autoClickerBasePrice;
 
   // Aktivace / deaktivace tlačítka podle počtu coinů
   buyAutoButton.disabled = coins < getAutoClickerPrice() || autoClickerEnabled == true;
@@ -87,7 +93,7 @@ function updateUI() {
 
 // ----- Click na hlavní tlačítko -----
 clickButton.addEventListener("click", () => {
-  addCoins(1);
+  addCoins(autoClickerPowerLevel);
 });
 
 // ----- Click na tlačítko obchodu -----
@@ -118,7 +124,7 @@ buyAutoSpeed.addEventListener("click", () => {
     const price = getAutoClickerSpeedPrice();
     if (coins >= price) {
       coins -= price;
-      autoClickerSpeedLevel *= 0.9;
+      autoClickerSpeedLevel += 1;
       updateUI();
       saveGame();
     }
@@ -137,17 +143,21 @@ buyAutoPower.addEventListener("click", () => {
 // ----- Auto-klepání každou vteřinu -----
 setInterval(() => {
   if (autoClickerEnabled == true) {
-    // např. každý level = +1 coin za vteřinu
-    addCoins(autoClickerPowerLevel * 1,1);
+    // každý level = +1 coin za čas
+    addCoins(autoClickerPowerLevel);
   }
-}, 1000);
+}, getAutoClickerSpeed());
+
+function getAutoClickerSpeed(){
+    return  (autoClickerBaseSpeed * Math.pow(0.5, (autoClickerSpeedLevel - 1)))
+}
 
 // ----- Reset hry -----
 resetButton.addEventListener("click", () => {
   if (confirm("Opravdu chceš začít znovu?")) {
     coins = 0;
     autoClickerEnabled = false;
-    autoClickerSpeedLevel = 5000;
+    autoClickerSpeedLevel = 1;
     autoClickerPowerLevel = 1;
 
     saveGame();
