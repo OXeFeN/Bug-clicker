@@ -2,7 +2,7 @@
 let coins = 0;
 let autoClickerEnabled = false;
 let autoClickerPowerLevel = 1;
-let autoClickerSpeedLevel = 1000;
+let autoClickerSpeedLevel = 5000;
 let autoClickerBasePrice = 10;
 let autoClickerPowerBasePrice = 100;
 let autoClickerSpeedBasePrice = 10000;
@@ -14,15 +14,15 @@ const autoPowerPriceSpan = document.querySelector("#autoclicker-powerPrice");
 const autoSpeedPriceSpan = document.querySelector("#autoclicker-speedPrice");
 
 const clickButton = document.querySelector("#click-button");
-const buyAutoButton = document.querySelector("#autoClick-activate");
+const buyAutoButton = document.querySelector("#buyAutoClick-activate");
 const resetButton = document.querySelector("#reset-game");
 
 const openShopButton = document.querySelector("#open-shop");
 const shopPanel = document.querySelector("#shop");
 const closeShopButton = document.querySelector("#close-shop");
 
-const buyAutoPower = document.querySelector("#autoClick-power");
-const buyAutoSpeed = document.querySelector("#autoClick-speed");
+const buyAutoPower = document.querySelector("#buyAutoClick-power");
+const buyAutoSpeed = document.querySelector("#buyAutoClick-speed");
 
 
 
@@ -76,8 +76,8 @@ function updateUI() {
 
   // Aktivace / deaktivace tlačítka podle počtu coinů
   buyAutoButton.disabled = coins < getAutoClickerPrice();
-  buyAutoButton.disabled = coins < getAutoClickerPrice();
-  buyAutoButton.disabled = coins < getAutoClickerPrice();
+  buyAutoPower.disabled = coins < getAutoClickerPowerPrice();
+  buyAutoSpeed.disabled = coins < getAutoClickerSpeedPrice();
 }
 
 // ----- Click na hlavní tlačítko -----
