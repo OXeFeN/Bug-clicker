@@ -1,0 +1,96 @@
+body {
+    font-family: system-ui, sans-serif;
+    background: #f5f7fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  
+  .app {
+    background: #ffffff;
+    padding: 24px 32px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    min-width: 320px;
+  }
+  
+  h1 {
+    margin-top: 0;
+  }
+  
+  .stats p {
+    margin: 4px 0;
+    font-size: 18px;
+  }
+  
+  .main-button {
+    margin: 16px 0;
+    padding: 16px 32px;
+    font-size: 20px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+    transition: transform 0.05s ease, box-shadow 0.1s ease;
+  }
+  
+  .main-button:active {
+    transform: scale(0.96);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  
+  .shop {
+    background: #c2d8ff;
+    padding: 16px 24px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    min-width: 320px;
+  }
+  
+  .shop button {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    background: #10b981;
+    color: white;
+  }
+  
+  .shop button:disabled {
+    background: #b91010;
+    cursor: not-allowed;
+  }
+  
+  .reset {
+    margin-top: 20px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    background: white;
+    cursor: pointer;
+  }
+  .hidden {
+    display: none;
+  }
+  .shop .red-x {
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #ffffff;
+    background: #ff0000;
+    cursor: pointer;
+    text-align: center;
+  }
+  .upgrade {
+    
+  }

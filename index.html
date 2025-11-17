@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Coin Clicker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>Coin Clicker</h1>
+
+    <div class="stats">
+      <p>Coins: <span id="coins">0</span></p>
+      <p>AutoClicker active <span id="autoclicker-level">0</span></p>
+      <p>AutoClicker Power: <span id="autoclicker-level">0</span></p>
+      <p>AutoClicker Speed: <span id="autoclicker-level">0</span></p>
+    </div>
+
+    <button id="click-button" class="main-button">
+        Coin
+    </button>
+      
+    <button id="open-shop" class="main-button">
+        Shop
+    </button>
+
+    <div id="shop"class="shop hidden">
+      <h2>Shop</h2>
+        <button id="close-shop" class="main-button red-x">
+            ×
+        </button>
+        <div class="upgrade">
+            <button id="autoClick-activate">Activate</button>
+        </div>
+        
+        <div class="upgrade">
+            <button id="autoClick-power">Upgrade Power</button>
+        </div>
+        
+        <div class="upgrade">
+            <button id="autoClick-speed">Upgrade Speed</button>
+        </div>
+    </div>
+
+    <button id="reset-game" class="reset">
+      Reset game
+    </button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
