@@ -1,6 +1,6 @@
 // ----- Stav hry -----
 let coins = 0;
-let autoclickerEnabled = false;
+let autoClickerEnabled = false;
 let autoClickerPowerLevel = 1;
 let autoClickerSpeedLevel = 1000;
 let autoClickerBasePrice = 10;
@@ -9,8 +9,9 @@ let autoClickerSpeedBasePrice = 10000;
 
 // ----- Selektory -----
 const coinsSpan = document.querySelector("#coins");
-const autoLevelSpan = document.querySelector("#autoclicker-level");
-const autoPriceSpan = document.querySelector("#autoclicker-price");
+const autoEnabledSpan = document.querySelector("#autoclicker-enabled");
+const autoPowerPriceSpan = document.querySelector("#autoclicker-powerPrice");
+const autoSpeedPriceSpan = document.querySelector("#autoclicker-speedPrice");
 
 const clickButton = document.querySelector("#click-button");
 const buyAutoButton = document.querySelector("#autoClick-activate");
@@ -31,7 +32,10 @@ function loadGame() {
   if (saved) {
     const data = JSON.parse(saved);
     coins = data.coins ?? 0;
-    autoClickerLevel = data.autoClickerLevel ?? 0;
+    autoClickerEnabled = data.autoclickerEnabled ?? false;
+    autoClickerPowerLevel = data.autoClickerPowerLevel ?? 1;
+    autoClickerSpeedLevel = data.autoClickerSpeedLevel ?? 1000;
+
   }
   updateUI();
 }
@@ -40,7 +44,9 @@ function loadGame() {
 function saveGame() {
   const data = {
     coins,
-    autoClickerLevel,
+    autoClickerEnabled,
+    autoClickerPowerLevel,
+    autoClickerSpeedLevel,
   };
   localStorage.setItem("bugClickerSave", JSON.stringify(data));
 }
@@ -64,8 +70,9 @@ function addCoins(amount) {
 // ----- Update UI -----
 function updateUI() {
   coinsSpan.textContent = coins;
-  autoLevelSpan.textContent = autoClickerLevel;
-  autoPriceSpan.textContent = getAutoClickerPrice();
+  autoEnabledSpan.textContent = autoClickerEnabled;
+  autoPowerPriceSpan.textContent = getAutoClickerPowerPrice();
+  autoSpeedPriceSpan.textContent = getAutoClickerSpeedPrice();
 
   // Aktivace / deaktivace tlačítka podle počtu coinů
   buyAutoButton.disabled = coins < getAutoClickerPrice();
