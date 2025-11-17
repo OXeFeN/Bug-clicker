@@ -1,11 +1,12 @@
 // ----- Stav hry -----
+let autoClickIntervalId = null;
 let coins = 0;
 let autoClickerEnabled = false;
 let autoClickerPowerLevel = 1;
 let autoClickerSpeedLevel = 1;
-let autoClickerBasePrice = 1000;
-let autoClickerPowerBasePrice = 50;
-let autoClickerSpeedBasePrice = 2000;
+let autoClickerBasePrice = 1;
+let autoClickerPowerBasePrice = 5;
+let autoClickerSpeedBasePrice = 20;
 let autoClickerBaseSpeed = 5000;
 
 // ----- Selektory -----
@@ -114,6 +115,7 @@ buyAutoButton.addEventListener("click", () => {
   if (coins >= price) {
     coins -= price;
     autoClickerEnabled = true
+    startAutoClickLoop();
     updateUI();
     saveGame();
   }
@@ -125,6 +127,7 @@ buyAutoSpeed.addEventListener("click", () => {
     if (coins >= price) {
       coins -= price;
       autoClickerSpeedLevel += 1;
+      startAutoClickLoop();
       updateUI();
       saveGame();
     }
@@ -141,16 +144,21 @@ buyAutoPower.addEventListener("click", () => {
   });
 
 // ----- Auto-klepání každou vteřinu -----
-setInterval(() => {
-  if (autoClickerEnabled == true) {
-    // každý level = +1 coin za čas
-    addCoins(autoClickerPowerLevel);
-  }
-}, getAutoClickerSpeed());
+function startAutoClickLoop(){
+    if (autoClickIntervalId !== null)
+        clearInterval(autoClickIntervalId)
+    autoClickIntervalId = setInterval(() => {
+        if (autoClickerEnabled == true) {
+        // každý level = +1 coin za čas
+        addCoins(autoClickerPowerLevel);
+        }
+        }, getAutoClickerSpeed());
+}
 
 function getAutoClickerSpeed(){
     return  (autoClickerBaseSpeed * Math.pow(0.5, (autoClickerSpeedLevel - 1)))
 }
+
 
 // ----- Reset hry -----
 resetButton.addEventListener("click", () => {
