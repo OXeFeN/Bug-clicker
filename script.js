@@ -2,7 +2,7 @@
 let coins = 0;
 let autoClickerEnabled = false;
 let autoClickerPowerLevel = 1;
-let autoClickerSpeedLevel = 5000;
+let autoClickerSpeedLevel = 1;
 let autoClickerBasePrice = 10;
 let autoClickerPowerBasePrice = 100;
 let autoClickerSpeedBasePrice = 10000;
@@ -12,6 +12,7 @@ const coinsSpan = document.querySelector("#coins");
 const autoEnabledSpan = document.querySelector("#autoclicker-enabled");
 const autoPowerPriceSpan = document.querySelector("#autoclicker-powerPrice");
 const autoSpeedPriceSpan = document.querySelector("#autoclicker-speedPrice");
+const autoClickerPriceSpan = document.querySelector("#autoClicker-price");
 
 const clickButton = document.querySelector("#click-button");
 const buyAutoButton = document.querySelector("#buyAutoClick-activate");
@@ -79,8 +80,7 @@ function updateUI() {
   autoSpeedPriceSpan.textContent = getAutoClickerSpeedPrice();
 
   // Aktivace / deaktivace tlačítka podle počtu coinů
-  buyAutoButton.disabled = coins < getAutoClickerPrice();
-  buyAutoButton.disabled = autoClickerEnabled = true;
+  buyAutoButton.disabled = coins < getAutoClickerPrice() || autoClickerEnabled == true;
   buyAutoPower.disabled = coins < getAutoClickerPowerPrice();
   buyAutoSpeed.disabled = coins < getAutoClickerSpeedPrice();
 }
@@ -107,27 +107,28 @@ buyAutoButton.addEventListener("click", () => {
   const price = getAutoClickerPrice();
   if (coins >= price) {
     coins -= price;
+    autoClickerEnabled = true
     updateUI();
     saveGame();
   }
 });
 
 // ----- Upgrade AutoClickeru -----
-buyAutoButton.addEventListener("click", () => {
-    const price = getAutoClickerPrice();
+buyAutoSpeed.addEventListener("click", () => {
+    const price = getAutoClickerSpeedPrice();
     if (coins >= price) {
       coins -= price;
-      autoClickerLevel += 1;
+      autoClickerSpeedLevel *= 0.9;
       updateUI();
       saveGame();
     }
   });
 
-buyAutoButton.addEventListener("click", () => {
-    const price = getAutoClickerPrice();
+buyAutoPower.addEventListener("click", () => {
+    const price = getAutoClickerPowerPrice();
     if (coins >= price) {
       coins -= price;
-      autoClickerLevel += 1;
+      autoClickerPowerLevel += 1;
       updateUI();
       saveGame();
     }
@@ -135,9 +136,9 @@ buyAutoButton.addEventListener("click", () => {
 
 // ----- Auto-klepání každou vteřinu -----
 setInterval(() => {
-  if (autoClickerLevel > 0) {
+  if (autoClickerEnabled == true) {
     // např. každý level = +1 coin za vteřinu
-    addCoins(autoClickerLevel * 1,1);
+    addCoins(autoClickerPowerLevel * 1,1);
   }
 }, 1000);
 
@@ -145,7 +146,10 @@ setInterval(() => {
 resetButton.addEventListener("click", () => {
   if (confirm("Opravdu chceš začít znovu?")) {
     coins = 0;
-    autoClickerLevel = 0;
+    autoClickerEnabled = false;
+    autoClickerSpeedLevel = 5000;
+    autoClickerPowerLevel = 1;
+
     saveGame();
     updateUI();
   }

@@ -11,9 +11,9 @@
 
     <div class="stats">
       <p>Coins: <span id="coins">0</span></p>
-      <p>AutoClicker active: <span id="autoclicker-enabled">0</span></p>
-      <p>AutoClicker Power: <span id="autoclicker-powerLevel">0</span></p>
-      <p>AutoClicker Speed: <span id="autoclicker-speedLevel">0</span></p>
+      <p>Autoclicker active: <span id="autoclicker-enabled">0</span></p>
+      <p>Autoclicker Power: <span id="autoclicker-powerLevel">0</span></p>
+      <p>Autoclicker Speed: <span id="autoclicker-speedLevel">0</span></p>
     </div>
 
     <button id="click-button" class="main-button">
@@ -29,19 +29,21 @@
         <button id="close-shop" class="main-button red-x">
             ×
         </button>
-        <div class="upgrade">
-            <button id="buyAutoClick - active">Autoclicker</button>
+        <div id="autoClickBox" class="upgrade">
+            <button id="buyAutoClick-activate">Autoclicker <span id="autoClicker-price">0</span></button>
         </div>
-        
+        <div id="autoClickBox-enabled" class="upgrade hidden">
+            <span> Autoclicker <p>ONLINE</p></span>
+        </div>
         <div class="upgrade">
             <button id="buyAutoClick-power">Upgrade Power <span id="autoclicker-powerPrice">0</span></button>
-            AutoClicker Power: <span id="autoclicker-powerLevel">0</span>
+            Autoclicker Power: <span id="autoclicker-powerLevel">0</span>
             
         </div>
         
         <div class="upgrade">
             <button id="buyAutoClick-speed">Upgrade Speed <span id="autoclicker-speedPrice">0</span></button>
-            AutoClicker Speed: <span id="autoclicker-speedLevel">0</span>
+            Autoclicker Speed: <span id="autoclicker-speedLevel">0</span>
         </div>
     </div>
 
