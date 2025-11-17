@@ -52,13 +52,17 @@ function saveGame() {
 }
 
 // ----- Přepočet ceny AutoClickeru -----
+function getAutoClickerPrice(){
+    return autoClickerBasePrice
+}
 function getAutoClickerPowerPrice() {
   // cena roste s levelem (např. 10, 15, 22, ...)
   return Math.floor(autoClickerPowerBasePrice * Math.pow(1.5, autoClickerPowerLevel));
 }
 function getAutoClickerSpeedPrice() {
     return Math.floor(autoClickerSpeedBasePrice * Math.pow(2, autoClickerSpeedLevel));
-  }
+}
+
 
 // ----- Přidání coinů -----
 function addCoins(amount) {
@@ -76,6 +80,7 @@ function updateUI() {
 
   // Aktivace / deaktivace tlačítka podle počtu coinů
   buyAutoButton.disabled = coins < getAutoClickerPrice();
+  buyAutoButton.disabled = autoClickerEnabled = true;
   buyAutoPower.disabled = coins < getAutoClickerPowerPrice();
   buyAutoSpeed.disabled = coins < getAutoClickerSpeedPrice();
 }
@@ -102,7 +107,6 @@ buyAutoButton.addEventListener("click", () => {
   const price = getAutoClickerPrice();
   if (coins >= price) {
     coins -= price;
-    autoClickerLevel += 1;
     updateUI();
     saveGame();
   }
